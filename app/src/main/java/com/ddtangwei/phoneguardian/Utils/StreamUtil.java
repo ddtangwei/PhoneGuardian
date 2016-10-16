@@ -29,7 +29,7 @@ public class StreamUtil {
 
                 baos.write(buf,0,temp);
 
-                return baos.toString();
+                return new String(baos.toByteArray(),"UTF-8");
             }
         } catch (IOException e) {
             e.printStackTrace();

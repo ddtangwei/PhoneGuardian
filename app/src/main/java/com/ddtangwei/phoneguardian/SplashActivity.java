@@ -47,7 +47,7 @@ public class SplashActivity extends Activity {
     protected static final int JSONEXCEPTION = 104;
 
     private String mVersionDes;
-    private String mDownloadUrl;
+    private String mVersionUrl;
     private TextView tv_version_name;
     private int mLocalVersionCode;
 
@@ -130,11 +130,10 @@ public class SplashActivity extends Activity {
 
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
 
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath()
-                    + File.separator + "PhoneGuardian.apk";
+            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/PhoneGuardian.apk";
 
             HttpUtils httpUtils = new HttpUtils();
-            httpUtils.download(mDownloadUrl, path, new RequestCallBack<File>() {
+            httpUtils.download(mVersionUrl,path, new RequestCallBack<File>() {
                 @Override
                 public void onSuccess(ResponseInfo<File> responseInfo) {
                     Log.i(tag,"下载成功");
@@ -215,7 +214,7 @@ public class SplashActivity extends Activity {
                 Message msg = Message.obtain();
 
                     try {
-                        URL url = new URL("http://192.168.31.68:8080/PhoneGuardian/wersion.json");
+                        URL url = new URL("http://192.168.31.68:8080/PhoneGuardian/version.json");
                         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
                         connection.setConnectTimeout(5000);
                         connection.setReadTimeout(5000);
@@ -235,17 +234,16 @@ public class SplashActivity extends Activity {
                                 String versionName = jsonObject.getString("versionName");
                                 mVersionDes = jsonObject.getString("versionDes");
                                 String versionCode = jsonObject.getString("versionCode");
-                                mDownloadUrl = jsonObject.getString("downloadUrl");
+                                mVersionUrl = jsonObject.getString("versionUrl");
 
                                 Log.i(tag, versionName);
                                 Log.i(tag, mVersionDes);
                                 Log.i(tag, versionCode);
-                                Log.i(tag, mDownloadUrl);
+                                Log.i(tag, mVersionUrl);
 
-                                if (Integer.parseInt(versionCode) > mLocalVersionCode){
+                                if (mLocalVersionCode < Integer.parseInt(versionCode)){
 
                                     msg.what = UPDATE_VERSION;
-
 
                                 }else{
                                     msg.what = ENTER_HOME;
