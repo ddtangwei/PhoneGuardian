@@ -93,6 +93,8 @@ public class SplashActivity extends Activity {
 
         //初始化data
         initData();
+
+        System.out.println(" ");
     }
 
     private void showUpdateDialog() {
