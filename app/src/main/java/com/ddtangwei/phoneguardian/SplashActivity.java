@@ -94,14 +94,12 @@ public class SplashActivity extends Activity {
         //初始化data
         initData();
 
-
-
     }
 
     private void showUpdateDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("版本更新");
+        builder.setTitle("更新");
         builder.setMessage(mVersionDes);
         builder.setPositiveButton(R.string.update_dialog_positive, new DialogInterface.OnClickListener() {
             @Override
