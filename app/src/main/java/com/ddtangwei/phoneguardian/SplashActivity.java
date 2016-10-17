@@ -94,6 +94,8 @@ public class SplashActivity extends Activity {
         //初始化data
         initData();
 
+
+
     }
 
     private void showUpdateDialog() {
