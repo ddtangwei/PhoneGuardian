@@ -132,6 +132,8 @@ public class SplashActivity extends Activity {
 
             String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/PhoneGuardian.apk";
 
+            System.out.println(path);
+
             HttpUtils httpUtils = new HttpUtils();
             httpUtils.download(mVersionUrl,path, new RequestCallBack<File>() {
                 @Override
@@ -168,12 +170,12 @@ public class SplashActivity extends Activity {
     }
 
     private void installAPK(File file) {
+        
         Intent intent = new Intent("android.intent.action.VIEW");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.setData(Uri.fromFile(file));
         intent.setType("application/vnd.android.package-archive");
 
-        startActivity(intent);
         startActivityForResult(intent, 0);
     }
 
