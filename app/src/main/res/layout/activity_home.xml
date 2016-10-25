@@ -5,8 +5,26 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:text="功能列表"
+        style="@style/TitleStyle"/>
+
+    <!-- 跑马灯效果 -->
+    <com.ddtangwei.phoneguardian.view.FocusTextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="HomePage"/>
+        android:text="冬天悄悄过去，春天很快来啦！！！！！哈哈哈哈哈！！！春天悄悄过去，夏天很快来啦！！！！！哈哈哈哈哈！！！"
+        android:textColor="#000"
+        android:singleLine="true"
+        android:padding="5dp"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"/>
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/gv_home"
+        android:numColumns="3"
+        android:verticalSpacing="10dp"
+        ></GridView>
 
 </LinearLayout>

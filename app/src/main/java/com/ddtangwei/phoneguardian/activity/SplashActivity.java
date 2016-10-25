@@ -1,24 +1,24 @@
-package com.ddtangwei.phoneguardian;
+package com.ddtangwei.phoneguardian.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Notification;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Path;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.util.JsonReader;
 import android.util.Log;
-import android.widget.Button;
+import android.view.animation.AlphaAnimation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ddtangwei.phoneguardian.R;
+import com.ddtangwei.phoneguardian.Utils.ConstantValue;
+import com.ddtangwei.phoneguardian.Utils.SpUtils;
 import com.ddtangwei.phoneguardian.Utils.StreamUtil;
 import com.ddtangwei.phoneguardian.Utils.ToastUtils;
 import com.lidroid.xutils.HttpUtils;
@@ -35,7 +35,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
 public class SplashActivity extends Activity {
 
@@ -45,6 +44,7 @@ public class SplashActivity extends Activity {
     protected static final int IOEXCEPTION = 102;
     protected static final int URLEXCEPTION = 103;
     protected static final int JSONEXCEPTION = 104;
+    private RelativeLayout activity_splash;
 
     private String mVersionDes;
     private String mVersionUrl;
@@ -83,6 +83,7 @@ public class SplashActivity extends Activity {
     };
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +95,16 @@ public class SplashActivity extends Activity {
         //初始化data
         initData();
 
+        //淡入效果
+        initAnimation();
+
+
+    }
+
+    private void initAnimation() {
+        AlphaAnimation animation = new AlphaAnimation(0, 1);
+        animation.setDuration(3000);
+        activity_splash.startAnimation(animation);
     }
 
     private void showUpdateDialog() {
@@ -203,9 +214,15 @@ public class SplashActivity extends Activity {
         //获取本地版本号
         mLocalVersionCode = getVersionCode();
 
-        //获取服务器数据，对比
-        checkVersion();
 
+        if (SpUtils.getBoolean(this, ConstantValue.OPEN_UPDATE,false)) {
+            //获取服务器数据，对比
+            checkVersion();
+        }else {
+
+            mHandler.sendEmptyMessageDelayed(ENTER_HOME,4000);
+
+        }
 
     }
 
@@ -215,6 +232,7 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 Message msg = Message.obtain();
+                long startTime = System.currentTimeMillis();
 
                     try {
                         URL url = new URL("http://192.168.31.68:8080/PhoneGuardian/version.json");
@@ -263,8 +281,18 @@ public class SplashActivity extends Activity {
                     } catch (IOException e) {
                         e.printStackTrace();
                         msg.what = IOEXCEPTION;
-                    }
+                    }finally {
+                        long endTime = System.currentTimeMillis();
+                        if(endTime-startTime<4000){
+                            try {
+                                Thread.sleep(4000-(endTime-startTime));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
                         mHandler.sendMessage(msg);
+                    }
+
             }
         }).start();
 
@@ -306,6 +334,7 @@ public class SplashActivity extends Activity {
     private void initUI() {
 
         tv_version_name = (TextView) findViewById(R.id.tv_version_name);
+        activity_splash = (RelativeLayout) findViewById(R.id.activity_splash);
     }
 }
 

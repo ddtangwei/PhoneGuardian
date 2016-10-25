@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+       style="@style/TitleStyle"
+        android:text="设置中心"/>
+
+    <com.ddtangwei.phoneguardian.view.SettingItemView
+        xmlns:phoneguardian="http://schemas.android.com/apk/res/com.ddtangwei.phoneguardian"
+        android:id="@+id/siv_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        phoneguardian:destitle="自动更新设置"
+        phoneguardian:desoff="自动更新已关闭"
+        phoneguardian:deson="自动更新已开启">
+    </com.ddtangwei.phoneguardian.view.SettingItemView>
+
+    <com.ddtangwei.phoneguardian.view.SettingItemView
+        xmlns:phoneguardian="http://schemas.android.com/apk/res/com.ddtangwei.phoneguardian"
+        android:id="@+id/siv_phone_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        phoneguardian:destitle="电话归属地显示设置"
+        phoneguardian:desoff="归属地设置已关闭"
+        phoneguardian:deson="归属地设置已开启">
+    </com.ddtangwei.phoneguardian.view.SettingItemView>
+
+</LinearLayout>
